@@ -1,5 +1,5 @@
 [project]
-name = "cblegare-420-611-bt-nim"
+name = "nim"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-nim = "nim:main"
+nim = "nim.run:main"
 
 [build-system]
 requires = ["uv_build>=0.12.12,<0.13.0"]
@@ -21,5 +21,7 @@ build-backend = "uv_build"
 [dependency-groups]
 dev = [
     "coverage>=7.16.2",
+    "mypy>=2.4.0",
+    "nox[uv]>=2026.8.17",
     "pytest>=9.1.1",
 ]

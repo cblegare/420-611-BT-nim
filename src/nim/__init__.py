@@ -1,14 +1,12 @@
 """
-Module
+Espace de nom principal de `nim`.
 """
 
 from __future__ import annotations
 
 import random
 from collections.abc import Collection, Iterable
-from copy import copy
-from enum import IntEnum
-from typing import Literal, NamedTuple, cast
+from typing import Literal, cast
 
 type Board = tuple[int, ...]
 r"""
@@ -79,21 +77,24 @@ Exemples:
 
 
 type QValue = float | int
-# TODO: (5 points)
+# TODO: QValue (5 points)
 #   Documenter le type nim.QValue
 
 
-def new_random_board(number_of_piles: int | None = None):
+def new_random_board(num_heaps: int | None = None):
     """Initialise un nouveau plateau aléatoire.
 
     Args:
-        number_of_piles:
+        num_heaps:
             Détermine un nombre de piles. S'il n'est pas défini,
             un nombre aléatoire est déterminé par défaut.
     """
-    number_of_piles = number_of_piles or random.randint(1, 10)
+    if num_heaps and num_heaps < 0:
+        raise ValueError("Seules des valeurs positives sont acceptées")
 
-    board_data = tuple(random.randint(1, 10) for _ in range(number_of_piles))
+    num_heaps = num_heaps or random.randint(1, 10)
+
+    board_data = tuple(random.randint(1, 10) for _ in range(num_heaps))
     return board_data
 
 
@@ -121,12 +122,12 @@ def transition(board: Board, action: Action) -> Board:
         L'état du plateau de Nim résultant de l'application de l'action
         sur l'état d'origine.
     """
-    # TODO (10 points):
+    # TODO: transition (10 points)
     #   Tester et implémenter nim.transition
 
 
 def available_actions(board_data: Board) -> Collection[Action]:
-    # TODO (10 points):
+    # TODO: available_actions (10 points)
     #    Documenter et implémenter nim.available_actions
     ...
 
@@ -134,7 +135,7 @@ def available_actions(board_data: Board) -> Collection[Action]:
 class Nim:
     """Implémente les règles du jeu de Nim."""
 
-    def __init__(self, board: Board|None = None):
+    def __init__(self, board: Board | None = None):
         """Initialise un plateau de jeu..
 
         Args:
@@ -152,8 +153,6 @@ class Nim:
 
         self.board = board or new_random_board()
         self.player: Player = 0
-        self.winner: Player | None = None
-        self.loser: Player | None = None
 
     @property
     def available_actions(self) -> Iterable[Action]:
@@ -187,9 +186,19 @@ class Nim:
 
         self.switch_player()
 
+    @property
+    def winner(self) -> Player | None:
+        """Le gagnant de la partie, s'il-y-a lieu."""
         if all(pile == 0 for pile in self.board):
-            self.winner = self.player
-            self.loser = self._other_player(self.winner)
+            return self.player
+        return None
+
+    @property
+    def loser(self) -> Player | None:
+        """Le gagnant de la partie, s'il-y-a lieu."""
+        if self.winner is not None:
+            return self._other_player(self.winner)
+        return None
 
 
 class NimError(RuntimeError):

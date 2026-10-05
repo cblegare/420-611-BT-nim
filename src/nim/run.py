@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import random
+from typing import cast
 
 from nim import Action, Board, Nim, Player, Probability, new_random_board
 from nim.ai import QLearning
@@ -18,10 +21,10 @@ Exemples:
 
 
 def play(
-        game: Nim | None = None,
-        ai: QLearning|None = None,
-        human_player: Player | None = None,
-        ui: UserInterface | None = None
+    game: Nim | None = None,
+    ai: QLearning | None = None,
+    human_player: Player | None = None,
+    ui: UserInterface | None = None,
 ):
     """Joue une partie de Nim.
 
@@ -46,7 +49,7 @@ def play(
     ui = ui or UserInterface()
 
     # On conserve le dernier tour de chaque joueur
-    last_step: dict[Player, Step | None] = {}
+    last_step: dict[Player, Step] = {}
 
     while True:
         old_board = game.board
@@ -69,11 +72,15 @@ def play(
 
         if game.winner is not None:
             try:
-                ai.update(*last_step[game.winner], new_board, 1)
+                player = cast(Player, game.winner)
+                board, action = last_step[player]
+                ai.update(board, action, new_board, 1)
             except KeyError:
                 pass
             try:
-                ai.update(*last_step[game.loser], new_board, -1)
+                player = cast(Player, game.loser)
+                board, action = last_step[player]
+                ai.update(board, action, new_board, -1)
             except KeyError:
                 pass
 
@@ -140,7 +147,7 @@ def run(
 
     game = Nim(board=initial_board)
 
-    play(ai, game=game, human_player=human_player)
+    play(game=game, ai=ai, human_player=human_player)
 
 
 class UserInterface:
@@ -151,9 +158,6 @@ class UserInterface:
             print(f"Tas {i} : {count}")
         print()
 
-    def show_transition(self, old_board: Board, action: Action, new_board: Board) -> None:
-        pass
-
     def show_thinking(self, player: Player, board: Board, is_human: bool) -> None:
         if is_human:
             print(f"Au tour du joueur {player} (Humain).")
@@ -163,11 +167,11 @@ class UserInterface:
     def select_action(self, player: Player, board: Board) -> Action:
         while True:
             try:
-                pile = int(input("Choisissez une pile : "))
+                heap = int(input("Choisissez une heap : "))
                 count = int(input("Nombre d'objets à retirer : "))
 
-                if 0 <= pile < len(board) and 1 <= count <= board[pile]:
-                    return Action(pile, count)
+                if 0 <= heap < len(board) and 1 <= count <= board[heap]:
+                    return (heap, count)
 
                 print("Mouvement invalide. Réessayez.")
             except ValueError:
@@ -176,8 +180,8 @@ class UserInterface:
     def show_transition(
         self, old_board: Board, action: Action, new_board: Board
     ) -> None:
-        pile, count = action[0], action[1]
-        print(f"-> Action : {count} objet(s) retiré(s) du tas {pile}.")
+        heap, count = action[0], action[1]
+        print(f"-> Action : {count} objet(s) retiré(s) du tas {heap}.")
 
     def show_gameover(
         self, human_player: Player | None, winner: Player, board: Board

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Literal
 
 from nim import Action, Board, Probability, QValue
@@ -23,17 +25,17 @@ class QLearning:
             epsilon:
                 Le taux d'exploration.
 
-                TODO: (3 points)
+                TODO: epsilon (5 points)
                     Identifier une valeur par défaut
-                    et documenter le paramêtre alpha de manière à expliquer
-                    le sens du paramêtre et le choix de sa valeur.
+                    et documenter le paramètre alpha de manière à expliquer
+                    le sens du paramètre et le choix de sa valeur.
             alpha:
                 Le facteur d'apprentissage.
 
-                TODO: (3 points)
+                TODO: alpha (5 points)
                     Identifier une valeur par défaut
-                    et documenter le paramêtre alpha de manière à expliquer
-                    le sens du paramêtre et le choix de sa valeur.
+                    et documenter le paramètre alpha de manière à expliquer
+                    le sens du paramètre et le choix de sa valeur.
             gamma:
                 Le facteur d'actualisation.
 
@@ -51,7 +53,7 @@ class QLearning:
                 En revanche, si l'on fixe gamma à 1,
                 l'algorithme recherche des récompenses élevées à long terme.
 
-                TODO: (1 point)
+                TODO: gamma (2 points)
                     Identifier une valeur par défaut
 
 
@@ -89,7 +91,7 @@ class QLearning:
 
         Si aucune valeur-Q n'existe encore dans `self.q`, retourne 0.
         """
-        # TODO: (10 points)
+        # TODO: get_q_value (10 points)
         #   Tester et implémenter get_q_value
 
     def update_q_value(
@@ -126,7 +128,7 @@ class QLearning:
         facteur d'actualisation.
 
         """
-        # TODO: (10 points)
+        # TODO: update_q_value (10 points)
         #   Tester et implémenter update_q_value
         raise NotImplementedError
 
@@ -140,7 +142,7 @@ class QLearning:
         S'il n'y a aucune action disponible dans l'état, retourne 0.
 
         """
-        # TODO: (10 points)
+        # TODO: best_future_reward (10 points)
         #   Tester et implémenter best_future_reward
         raise NotImplementedError
 
@@ -159,6 +161,6 @@ class QLearning:
         elles est une valeur de retour acceptable.
 
         """
-        # TODO: (10 points)
+        # TODO: choose_action (10 points)
         #   Tester et implémenter choose_action
         raise NotImplementedError

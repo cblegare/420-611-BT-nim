@@ -12,6 +12,6 @@ docs/demo/generated/*.rst
 requirements-dev.lock
 requirements.lock
 .python-version
-.coverage
+.coverage*
 uv.lock
 node_modules/
