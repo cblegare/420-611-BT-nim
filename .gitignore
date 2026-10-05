@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info
+.venv
+build
+dist
+.idea/
+requirements.txt
+.dmypy.json
+docs/demo/generated/*.rst
+requirements-dev.lock
+requirements.lock
+.python-version
+.coverage
+uv.lock
+node_modules/
