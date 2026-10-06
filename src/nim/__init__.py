@@ -12,21 +12,21 @@ type Board = tuple[int, ...]
 r"""
 Le plateau de jeu.
 
-Un plateau de jeu de Nim a plusieurs piles d'objets. 
+Un plateau de jeu de Nim a plusieurs tas d'objets. 
 
 Nous représentons ce plateau par 
 un :math:`n`-uplet d'entiers :math:`k`
-tels qu'il y a :math:`n` piles de :math:`k` objets, 
+tels qu'il y a :math:`n` tas de :math:`k` objets, 
 :math:`n, k \in \mathbb{N}`.
 
 Exemples:
-    >>> ( board_with_3_piles_of_123 := (1, 2, 3) )
+    >>> ( board_with_3_tas_of_123 := (1, 2, 3) )
     (1, 2, 3)
     >>> ( empty_board := () )
     ()
-    >>> ( losing_board_of_2_piles := (0, 0) )
+    >>> ( losing_board_of_2_tas := (0, 0) )
     (0, 0)
-    >>> ( winning_board_of_4_piles := (0, 1, 0, 0) )
+    >>> ( winning_board_of_4_tas := (0, 1, 0, 0) )
     (0, 1, 0, 0)
 """
 
@@ -35,13 +35,13 @@ r"""
 Une action posée sur un plateau de jeu.
 
 Une action est la paire :math:`i, j`
-telle que de la pile numéro :math:`i` on retire :math:`j` objets
+telle que de la tas numéro :math:`i` on retire :math:`j` objets
 :math:`i, j in \mathbb{N}`.
 
 Exemples:
-    >>> ( prendre_7_objets_de_la_première_pile := (0, 7) )
+    >>> ( prendre_7_objets_de_la_première_tas := (0, 7) )
     (0, 7)
-    >>> ( ne_rien_prendre_de_la_2e_pile := (1, 0) )
+    >>> ( ne_rien_prendre_de_la_2e_tas := (1, 0) )
     (1, 0)
   
 """
@@ -81,12 +81,12 @@ type QValue = float | int
 #   Documenter le type nim.QValue
 
 
-def new_random_board(num_heaps: int | None = None):
+def new_random_board(num_heaps: int | None = None) -> Board:
     """Initialise un nouveau plateau aléatoire.
 
     Args:
         num_heaps:
-            Détermine un nombre de piles. S'il n'est pas défini,
+            Détermine un nombre de tas. S'il n'est pas défini,
             un nombre aléatoire est déterminé par défaut.
     """
     if num_heaps and num_heaps < 0:
@@ -112,10 +112,10 @@ def transition(board: Board, action: Action) -> Board:
     Raises:
         IndexError:
             Une action qui contient un :math:`i` qui ne corresponde à
-            aucune pile lève une erreur.
+            aucune tas lève une erreur.
         ValueError:
             Une action qui contient un :math:`j` trop grand ou trop
-            petit pour la quantité d'objets dans la pile math:`i` lève
+            petit pour la quantité d'objets dans la tas math:`i` lève
             une erreur.
 
     Return:
@@ -146,8 +146,6 @@ class Nim:
         Attributes:
             player:
                 Le joueur à qui le tour.
-            winner:
-                None, ou un joueur gagnant s'il-y-a lieu
 
         """
 
@@ -166,7 +164,7 @@ class Nim:
         self.player = self._other_player(self.player)
         return self.player
 
-    def move(self, action: Action):
+    def move(self, action: Action) -> None:
         """Effectue l'action sur le plateau pour le joueur actuel.
 
         Args:
@@ -189,7 +187,7 @@ class Nim:
     @property
     def winner(self) -> Player | None:
         """Le gagnant de la partie, s'il-y-a lieu."""
-        if all(pile == 0 for pile in self.board):
+        if all(tas == 0 for tas in self.board):
             return self.player
         return None
 

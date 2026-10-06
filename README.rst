@@ -2,6 +2,7 @@
  Travail pratique: Nim
 #######################
 
+> Ce fichier s'affichera mieux dans PyCharm que dans un navigateur
 
 Bien commencer
 ==============
@@ -73,6 +74,63 @@ il serait redondant de reprendre les explications ici.
 **Remarquez les mentions** ``TODO``.
 Ces mentions vous indiquent le travail à compléter pour votre TP!
 La mentions ``TODO`` précise aussi la valeur de la tâche à accomplir.
+
+
+Remise
+======
+
+Vous avez deux semaines jusqu'à 23h59 pour compléter le TP.
+
+Pour le remettre, créer un *fork* sur GitHub (ou GitLab), complétez votre
+code et poussez vos changement sur la branche ``main``
+
+N'oubliez pas de **donner l'URL de votre TP à votre enseignant**.
+
+
+Aide-mémoire
+============
+
+Synchroniser le bon interpréteur et les dépendances
+
+.. code::
+
+    uv sync
+
+Exécuter tous les scripts ``nox``:
+
+.. code::
+
+    uv run nox
+
+Obtenir la liste des scripts ``nox``:
+
+.. code::
+
+    uv run nox -l
+
+Exécuter un script particulier (par exemple ``format_py``):
+
+.. code::
+
+    uv run nox -s format_py
+
+Exécuter tous les scripts ayant une certaine étiquette (par exemple ``py``):
+
+.. code::
+
+    uv run nox -t py
+
+Obtenir de l'aide avec [``nox``](https://nox.thea.codes/en/stable/):
+
+.. code::
+
+    uv run nox --help
+
+Obtenir de l'aide avec [``uv``](https://docs.astral.sh/uv/)
+
+.. code::
+
+    uv --help
 
 
 Spécifications
