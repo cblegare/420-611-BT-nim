@@ -4,6 +4,14 @@
 
 > Ce fichier s'affichera mieux dans PyCharm que dans un navigateur
 
+Ce dépôt est géré sur GitLab à l'adresse
+https://gitlab.com/cblegareprof/420-611-BT-nim
+.
+Un miroir est gardé à jour automatiquement sur GitHub à l'adresse
+https://github.com/cblegare/420-611-BT-nim
+.
+
+
 Bien commencer
 ==============
 
